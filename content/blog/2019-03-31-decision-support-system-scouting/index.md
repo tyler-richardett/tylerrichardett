@@ -4,6 +4,7 @@ authors:
 tags:
 - Soccer Analytics
 date: "2019-03-31T00:00:00Z"
+lastmod: "2019-03-31T00:00:00Z"
 draft: false
 featured: false
 image:

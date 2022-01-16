@@ -3,7 +3,10 @@ authors:
 - tylerrichardett
 tags:
 - Soccer Analytics
+aliases:
+- /blog/2019/3/6/valuing-defensive-actions-using-offensive-possession-models
 date: "2019-03-06T00:00:00Z"
+lastmod: "2019-03-06T00:00:00Z"
 draft: false
 featured: false
 image:

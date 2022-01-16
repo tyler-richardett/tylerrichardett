@@ -4,9 +4,9 @@ theme: "starter-hugo-academic"
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-title: Academic # Website name
-baseurl: 'https://academic-demo.netlify.app/' # Website URL
-copyright: '' # Footer text, e.g. '© {year} Me'
+title: Tyler Richardett # Website name
+baseurl: 'https://tylerrichardett.com/' # Website URL
+copyright: '© {year} Tyler Richardett' # Footer text, e.g. '© {year} Me'
 
 ############################
 ## LANGUAGE
@@ -36,13 +36,13 @@ paginate: 10
 enableEmoji: true
 enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
-ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$, \.knit\.md$, \.utf8\.md$]
 permalinks:
   event: '/talk/:slug/'
   authors: '/author/:slug/'
   tags: '/tag/:slug/'
-  categories: '/category/:slug/'
   publication_types: '/publication-type/:slug/'
+  blog: '/blog/:year/:month/:day/:slug/'
 disableAliases: true
 outputs:
   home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
@@ -54,7 +54,6 @@ imaging:
 timeout: 600000
 taxonomies:
   tag: tags
-  category: categories
   publication_type: publication_types
   author: authors
 markup:

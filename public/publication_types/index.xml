@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publication_types | Tyler Richardett</title>
+    <link>https://tylerrichardett.com/publication_types/</link>
+      <atom:link href="https://tylerrichardett.com/publication_types/index.xml" rel="self" type="application/rss+xml" />
+    <description>Publication_types</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Tyler Richardett</copyright>
+    <image>
+      <url>https://tylerrichardett.com/media/logo_hu63450d64904b2806a1378e907e93ac54_121699_300x300_fit_lanczos_2.png</url>
+      <title>Publication_types</title>
+      <link>https://tylerrichardett.com/publication_types/</link>
+    </image>
+    
+  </channel>
+</rss>

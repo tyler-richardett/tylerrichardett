@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tyler Richardett</title>
+    <link>https://tylerrichardett.com/author/tyler-richardett/</link>
+      <atom:link href="https://tylerrichardett.com/author/tyler-richardett/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tyler Richardett</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Tyler Richardett</copyright><lastBuildDate>Thu, 26 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://tylerrichardett.com/author/tyler-richardett/avatar_hu77432770d33d46b87dd1365605175a5c_870585_270x270_fill_q75_lanczos_center.jpg</url>
+      <title>Tyler Richardett</title>
+      <link>https://tylerrichardett.com/author/tyler-richardett/</link>
+    </image>
+    
+    <item>
+      <title>Using Optical Tracking Data from Second Spectrum to Visualize Long Goal-scoring Build-ups</title>
+      <link>https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/</link>
+      <pubDate>Thu, 26 Aug 2021 00:00:00 +0000</pubDate>
+      <guid>https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/</guid>
+      <description>&lt;p&gt;Two weeks ago, Nashville SC scored a lovely team goal. All 10 field players contributed to a 15-pass sequence, putting Nashville up 2-1 over D.C. United.&lt;/p&gt;
+&lt;p&gt;Thanks to &lt;a href=&#34;https://www.mlssoccer.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Major League Soccer&lt;/a&gt; and &lt;a href=&#34;https://www.secondspectrum.com/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Second Spectrum&lt;/a&gt;, some of us lucky folks at &lt;a href=&#34;https://www.americansocceranalysis.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;American Soccer Analysis&lt;/a&gt; have access to 2D tracking data for every regular season and playoff MLS game. Just by plotting each frame of these special goal-scoring sequences, it&amp;rsquo;s enlightening to see how these attacking teams move and exploit space to ultimately unlock the opposing defense.&lt;/p&gt;
+&lt;p&gt;Because I used &lt;code&gt;{gridExtra}&lt;/code&gt; to arrange each component of the visualizations, I&amp;rsquo;m constructing and exporting each individual frame as a still image. To speed things up, I took advantage of &lt;code&gt;{doParallel}&lt;/code&gt; and &lt;code&gt;{foreach}&lt;/code&gt; to distribute the workload. And in order for each process&amp;rsquo;s &lt;code&gt;{ggsave}&lt;/code&gt; call to be able to write to the same location, I had to set &lt;code&gt;type = &amp;quot;cairo-png&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, to stitch all the frames together into an MP4 file, I&amp;rsquo;m leveraging the &lt;code&gt;{mapmate}&lt;/code&gt; &lt;a href=&#34;https://leonawicz.github.io/mapmate/articles/ffmpeg.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;wrapper&lt;/a&gt; around the &lt;a href=&#34;https://www.ffmpeg.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;FFmpeg command line tool&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mapmate::ffmpeg(
+    dir = tile_save_path, 
+    pattern = glue::glue(&amp;quot;{save_file_prefix}_%06d.png&amp;quot;),
+    output_dir = gif_mp4_save_path, 
+    output = glue::glue(&amp;quot;{save_file_prefix}.mp4&amp;quot;),
+    rate = export_fps, 
+    start = start_frame, 
+    overwrite = TRUE
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This content was originally developed as part of a Twitter thread, and each original tweet is embedded below. The videos are best viewed on desktop.&lt;/p&gt;
+&lt;h4 id=&#34;august-15-2021--nbspnbsp-nashville-sc-2---1-dc-united&#34;&gt;August 15, 2021   |  Nashville SC (2) - 1 D.C. United&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Two weeks ago, &lt;a href=&#34;https://twitter.com/hashtag/EveryoneN?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#EveryoneN&lt;/a&gt; scored a lovely team goal. All 10 field players contributed to a 15-pass sequence, putting Nashville up 2-1.&lt;br&gt;&lt;br&gt;Thanks to &lt;a href=&#34;https://twitter.com/MLS?ref_src=twsrc%5Etfw&#34;&gt;@MLS&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/SecondSpectrum?ref_src=twsrc%5Etfw&#34;&gt;@SecondSpectrum&lt;/a&gt;, we &lt;a href=&#34;https://twitter.com/AnalysisEvolved?ref_src=twsrc%5Etfw&#34;&gt;@AnalysisEvolved&lt;/a&gt; get an aerial view of these special build-ups. They’re more common than you might think! &lt;a href=&#34;https://t.co/gqEUDqrLt1&#34;&gt;pic.twitter.com/gqEUDqrLt1&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430980050220994561?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;august-21-2021--nbspnbsp-columbus-crew-1---2-seattle-sounders-fc&#34;&gt;August 21, 2021   |  Columbus Crew 1 - (2) Seattle Sounders FC&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;More recently, a late-game winner from &lt;a href=&#34;https://twitter.com/hashtag/Sounders?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Sounders&lt;/a&gt; was the product of 19 consecutive passes, a forced turnover immediately after the &lt;a href=&#34;https://twitter.com/hashtag/Crew96?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Crew96&lt;/a&gt; restart, and an effective long ball from &lt;a href=&#34;https://twitter.com/hashtag/MLSAllStar?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#MLSAllStar&lt;/a&gt; captain Cristian Roldan. &lt;a href=&#34;https://t.co/muW7nIhU3x&#34;&gt;pic.twitter.com/muW7nIhU3x&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430980520452710400?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;july-25-2021--nbspnbsp-inter-miami-cf-1---1-philadelphia-union&#34;&gt;July 25, 2021   |  Inter Miami CF 1 - (1) Philadelphia Union&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;This 27-pass sequence from &lt;a href=&#34;https://twitter.com/hashtag/DOOP?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#DOOP&lt;/a&gt; had a few quick switches in the &lt;a href=&#34;https://twitter.com/hashtag/InterMiamiCF?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#InterMiamiCF&lt;/a&gt; half and an impressive exchange between Sullivan and Gazdag at the top of the 18-yard box.&lt;br&gt;&lt;br&gt;But it was a poor pressing attempt from Gonzalo Higuaín that allowed Philadelphia to strike quickly. &lt;a href=&#34;https://t.co/e0POv6RV0S&#34;&gt;pic.twitter.com/e0POv6RV0S&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430980932845154313?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;july-17-2021--nbspnbsp-toronto-fc-1---0-orlando-city-sc&#34;&gt;July 17, 2021   |  Toronto FC (1) - 0 Orlando City SC&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;&lt;a href=&#34;https://twitter.com/hashtag/TFCLive?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#TFCLive&lt;/a&gt; scored their opener in July’s game against &lt;a href=&#34;https://twitter.com/hashtag/VamosOrlando?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#VamosOrlando&lt;/a&gt; after stringing together 19 consecutive passes in under 50 seconds.&lt;br&gt;&lt;br&gt;Altidore’s link-up play also pulled Jansson well out of position and ultimately forced an aerial matchup against Moutinho. &lt;a href=&#34;https://t.co/wsqKem6QeM&#34;&gt;pic.twitter.com/wsqKem6QeM&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981203553886217?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;july-3-2021--nbspnbsp-cf-montréal-1---0-inter-miami-cf&#34;&gt;July 3, 2021   |  CF Montréal (1) - 0 Inter Miami CF&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Side-to-side movement from &lt;a href=&#34;https://twitter.com/hashtag/CFMTL?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#CFMTL&lt;/a&gt; seemed to lull &lt;a href=&#34;https://twitter.com/hashtag/InterMiamiCF?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#InterMiamiCF&lt;/a&gt; to sleep in this 22-pass sequence.&lt;br&gt;&lt;br&gt;And Toye’s run at 40:29 enables Quioto, Mihailović, and Choinière to turn and run hard at what’s left of Miami’s defense. &lt;a href=&#34;https://t.co/LQ5AcP1vOb&#34;&gt;pic.twitter.com/LQ5AcP1vOb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981269597343746?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;june-19-2021--nbspnbsp-fc-cincinnati-0---2-colorado-rapids&#34;&gt;June 19, 2021   |  FC Cincinnati 0 - (2) Colorado Rapids&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;&lt;a href=&#34;https://twitter.com/hashtag/Rapids96?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Rapids96&lt;/a&gt; scored their goal on the road against &lt;a href=&#34;https://twitter.com/hashtag/FCCincy?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#FCCincy&lt;/a&gt; after 16 consecutive passes.&lt;br&gt;&lt;br&gt;Cruz and Kubo simultaneously apply pressure to the ball, leaving Price with plenty of space to drive at the Cincinnati defense and play an incisive pass toward Lewis. &lt;a href=&#34;https://t.co/MkFrhm5D9A&#34;&gt;pic.twitter.com/MkFrhm5D9A&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981323443822601?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;may-2-2021--nbspnbsp-seattle-sounders-fc-2---0-la-galaxy&#34;&gt;May 2, 2021   |  Seattle Sounders FC (2) - 0 LA Galaxy&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;During week 3, &lt;a href=&#34;https://twitter.com/hashtag/Sounders?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Sounders&lt;/a&gt; strung together 27 consecutive passes en route to Brad Smith’s second goal in two games.&lt;br&gt;&lt;br&gt;Seattle took advantage of the space out wide in their build-up, pulling the &lt;a href=&#34;https://twitter.com/hashtag/LAGalaxy?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#LAGalaxy&lt;/a&gt; defense to one side while Smith floated in at the back post. &lt;a href=&#34;https://t.co/yqX6mbXVTk&#34;&gt;pic.twitter.com/yqX6mbXVTk&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981390254977024?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;november-22-2020--nbspnbsp-minnesota-united-fc-3---0-colorado-rapids&#34;&gt;November 22, 2020   |  Minnesota United FC (3) - 0 Colorado Rapids&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Leading up to their third goal in the opening round of last year’s playoffs, &lt;a href=&#34;https://twitter.com/hashtag/MNUFC?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#MNUFC&lt;/a&gt; completed 24 consecutive passes.&lt;br&gt;&lt;br&gt;A smart run from Molino ultimately draws out a &lt;a href=&#34;https://twitter.com/hashtag/Rapids96?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Rapids96&lt;/a&gt; center back, leaving Reynoso with plenty of space to drive forward as other Minnesota attackers join. &lt;a href=&#34;https://t.co/Z4PJLJzN3B&#34;&gt;pic.twitter.com/Z4PJLJzN3B&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981455371456518?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;november-1-2020--nbspnbsp-colorado-rapids-1---0-seattle-sounders-fc&#34;&gt;November 1, 2020   |  Colorado Rapids (1) - 0 Seattle Sounders FC&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;This 17-pass sequence from &lt;a href=&#34;https://twitter.com/hashtag/Rapids96?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Rapids96&lt;/a&gt; against &lt;a href=&#34;https://twitter.com/hashtag/Sounders?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#Sounders&lt;/a&gt; is a great illustration of absorbing the opponent’s press and striking quickly when space opens up.&lt;br&gt;&lt;br&gt;Price is fortunate not to turn the ball over to Ruidíaz in a very dangerous area, but Colorado makes no mistake afterward. &lt;a href=&#34;https://t.co/iU1mfssJ2e&#34;&gt;pic.twitter.com/iU1mfssJ2e&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981533452615684?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;october-14-2020--nbspnbsp-vancouver-whitecaps-fc-1---0-los-angeles-fc&#34;&gt;October 14, 2020   |  Vancouver Whitecaps FC (1) - 0 Los Angeles FC&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Another example comes courtesy of &lt;a href=&#34;https://twitter.com/hashtag/VWFC?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#VWFC&lt;/a&gt; and their 19-pass sequence against &lt;a href=&#34;https://twitter.com/hashtag/LAFC?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#LAFC&lt;/a&gt;.&lt;br&gt;&lt;br&gt;With Vancouver inviting pressure from LAFC&amp;#39;s forwards, Rossi and BWP commit, Bush breaks the first line with a pass to Bikel, Bikel finds Dájome with a long ball, and Vancouver is off to the races. &lt;a href=&#34;https://t.co/GLlMagCIeo&#34;&gt;pic.twitter.com/GLlMagCIeo&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981598380498956?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;september-23-2020--nbspnbsp-real-salt-lake-2---0-la-galaxy&#34;&gt;September 23, 2020   |  Real Salt Lake (2) - 0 LA Galaxy&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Against &lt;a href=&#34;https://twitter.com/hashtag/LAGalaxy?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#LAGalaxy&lt;/a&gt; last September, &lt;a href=&#34;https://twitter.com/hashtag/RSL?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#RSL&lt;/a&gt; put 17 consecutive passes together before doubling their lead.&lt;br&gt;&lt;br&gt;After a switch from Glad, smart running from Baird and Rusnák draws out LA’s right back — leaving Rusnák with ample space and time to find Kreilach alone at the penalty spot. &lt;a href=&#34;https://t.co/yS35khkgCZ&#34;&gt;pic.twitter.com/yS35khkgCZ&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981663123779589?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h4 id=&#34;august-26-2020--nbspnbsp-orlando-city-sc-1---1-nashville-sc&#34;&gt;August 26, 2020   |  Orlando City SC (1) - 1 Nashville SC&lt;/h4&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;And here, effective counter-pressing from &lt;a href=&#34;https://twitter.com/hashtag/VamosOrlando?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#VamosOrlando&lt;/a&gt; deep in the &lt;a href=&#34;https://twitter.com/hashtag/EveryoneN?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#EveryoneN&lt;/a&gt; half yields 17 consecutive passes and an equalizer from Mueller.&lt;br&gt;&lt;br&gt;Controlled passing in tight quarters — particularly from Méndez — and a killer first-time ball from Pereyra make the difference. &lt;a href=&#34;https://t.co/CN1LqblkuY&#34;&gt;pic.twitter.com/CN1LqblkuY&lt;/a&gt;&lt;/p&gt;&amp;mdash; Tyler Richardett (@TylerRichardett) &lt;a href=&#34;https://twitter.com/TylerRichardett/status/1430981724054360066?ref_src=twsrc%5Etfw&#34;&gt;August 26, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;em&gt;Data: Second Spectrum&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Proposing a Decision Support System for Scouting Talent and Weighing Competing Objectives</title>
+      <link>https://tylerrichardett.com/blog/2019/03/31/proposing-a-decision-support-system-for-scouting-talent-and-weighing-competing-objectives/</link>
+      <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>https://tylerrichardett.com/blog/2019/03/31/proposing-a-decision-support-system-for-scouting-talent-and-weighing-competing-objectives/</guid>
+      <description>&lt;p&gt;As part of a semester-long assignment for my graduate studies, I&amp;rsquo;ve been working with a group of fellow students to envision and construct a prototype &lt;a href=&#34;https://en.wikipedia.org/wiki/Decision_support_system&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;decision support system (DSS)&lt;/a&gt;. Still in development, our DSS intends to pair professional soccer players&#39; event-level data with multi-criteria decision analysis methods&amp;mdash;resulting in a system which &amp;ldquo;assists clubs with the identification, scouting, and acquisition of world-class talent,&amp;rdquo; as we state in our initial proposal.&lt;/p&gt;
+&lt;p&gt;Even just building out a small-scale version of this, I&amp;rsquo;ve come to learn, is an incredibly tall task.&lt;/p&gt;
+&lt;h2 id=&#34;the-data-component-and-model-design&#34;&gt;The Data Component and Model Design&lt;/h2&gt;
+&lt;p&gt;In order to power our system with a sample of real players&#39; demographic information and event- and match-level statistics, I turned to the series of JSON files powering Wyscout&amp;rsquo;s platform. Our system will be primarily targeted at clubs with mid-sized budgets from the top leagues in the world, so I decided our sample of players should accurately reflect the environments in which their typical low-risk, high-reward prospects are found.&lt;/p&gt;
+&lt;p&gt;Thus, I limited our search to the (10) European countries whose top-level competitions are just below the level of the top leagues in the world, according to &lt;a href=&#34;https://www.uefa.com/memberassociations/uefarankings/country/#/yr/2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UEFA country coefficients&lt;/a&gt;: Russia, Portugal, Belgium, Ukraine, Turkey, Netherlands, Austria, Greece, Denmark, and Switzerland (\(n\) = 28 competitions). From there, I identified the players currently contracted with the clubs competing in those 28 leagues (as of February 17, 2019; \(n\) = 11,458 players). And lastly, I retrieved match-level statistics for each player, dating back to the 2015&amp;ndash;16 season (\(n\) = 486,789 cumulative matches played).&lt;/p&gt;
+&lt;p&gt;While other attributes are sure to be considered by scouts and other decision makers, the efficacy of our model hinges on two key components: talent maximization (in the short-, medium-, or long-term) and cost minimization.&lt;/p&gt;
+&lt;p&gt;As for the latter piece, for now, we&amp;rsquo;re relying solely on the market value provided for each player in the data set, derived from Transfermarkt&amp;rsquo;s model. (It&amp;rsquo;s worth noting that actual transfer values &lt;a href=&#34;https://nytimes.com/2017/06/22/sports/soccer/premier-league-transfers.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;often do not reflect&lt;/a&gt; these ones, for any number of explicable or inexplicable reasons.)&lt;/p&gt;
+&lt;p&gt;Whether we deliver a viable proof of concept, then, falls heavily on our ability to quantify players&#39; skill level in the most objective manner possible. Our approach, which I&amp;rsquo;ll touch on in greater detail in the next section, is sketched out in left-hand side of the model diagram below:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/dss-functional-diagram.png&#34; alt=&#34;Functional diagram of the decision support system and its underlying data.&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Adapted from &lt;a href=&#34;https://arxiv.org/pdf/1802.04987.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;an analysis carried out by Italian researchers&lt;/a&gt;, our process for developing current skill ratings for each player in our data set is as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Aggregate players&#39; event-level data, \(p\), to the match level, \(m\), for each team, \(T(p_T^m)\)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Assign a binary outcome variable to each tuple, where \(o_T^m = 1\) resembles a win for the corresponding team and \(o_T^m = 0\) resembles a draw or loss for the corresponding team&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On that matrix, train a classification model, such as linear support vector machines (LSVM), and extract the coefficients for each type of action&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Apply those coefficients as feature weights to the matrix containing each players&#39; (\(u\)) event-level data, \(p\), for each match, \(m(p_u^m)\)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The result, \(r(u,m)\), is used to determine a player&amp;rsquo;s current skill level, after undergoing the following transformations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Using Bayesian statistics, relative competition strength is determined and weighted into each rating value&lt;/li&gt;
+&lt;li&gt;Each performance is normalized by the number of minutes played&lt;/li&gt;
+&lt;li&gt;For smoothing purposes, the value used by the decision model will be a rolling average of some to-be-determined timeframe (e.g., 5 or 10 weeks)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Overall, the logic behind this approach checks out. Ultimately, a player&amp;rsquo;s inherent value lies in the degree to which he or she improves the team&amp;rsquo;s likelihood of winning any given match. So, it makes sense to first determine which types of actions help or hinder the team, and then to evaluate a player&amp;rsquo;s performance based on those findings.&lt;/p&gt;
+&lt;p&gt;In practice, however, applying that logic proved to be far more difficult than it had seemed.&lt;/p&gt;
+&lt;h2 id=&#34;training-the-classification-model&#34;&gt;Training the Classification Model&lt;/h2&gt;
+&lt;p&gt;At first, I pulled match-level data from nearly 5,000 unique games&amp;mdash;yielding nearly 10,000 observations&amp;mdash;across the 28 competitions for the 2018/19 season. As best I could, I attempted to replicate the model constructed by the Italian researchers, given the variables I had available. After several futile hours, however, all I had was a dozen or more classification models, all of which predicted the same outcome for every observation.&lt;/p&gt;
+&lt;p&gt;As such, I was forced examine two key differences between my approach and theirs. The first was obvious, yet manageable. Their set of inputs were far more granular and had higher dimensionality; I could solve for that by aggregating the player-level data&amp;mdash;which contains 300+ types of actions&amp;mdash;up to the match level.&lt;/p&gt;
+&lt;p&gt;The second, I believe, is a structural flaw in their approach. In their research, they explicitly lay out a sound argument for the exclusion of goals as features: The difference in the number of goals scored singularly determines the outcome of any given match. Why, then, were assists not also excluded? Goals don&amp;rsquo;t always come with assists, but assists are inherently tied to goals.&lt;/p&gt;
+&lt;p&gt;This, I felt, boosted their model performance, and that assertion was evident in their results. The top seven positively weighted features were &lt;em&gt;all&lt;/em&gt; of the seven types of assists used as inputs.&lt;/p&gt;
+&lt;p&gt;With a new set of training data, and with that added knowledge of our performance benchmark for the model, I found much greater success in my next attempt. In the feature selection process, one additional piece of insight I gathered from the previous, unsuccessful attempts was to include &lt;em&gt;only&lt;/em&gt; on-the-ball actions.&lt;/p&gt;
+&lt;p&gt;As you may well imagine, this makes it particularly difficult to evaluate defensive abilities&amp;mdash;a gripe with event-level data &lt;a href=&#34;https://tylerrichardett.com/blog/2019/03/06/valuing-defensive-actions-using-offensive-possession-models&#34;&gt;I&amp;rsquo;ve shared in past&lt;/a&gt;. In this particular context, including defensive actions such as blocks and clearances in the model tends to backfire for defensive players. This is because, at the match level, a greater number of these types of events typically means that a team is under siege, and thus that they are more likely to lose the match, yielding a negative coefficient. When applying that coefficient to a player&amp;rsquo;s performance, it dramatically decreases the ratings of players actively involved in thwarting opponents&#39; attacks, which runs counter to how their overall performance impacts the outcome of the match. Defenders typically don&amp;rsquo;t have much impact on whether they are placed in those types of situations, and conversely, much of their most impactful play happens off the ball&amp;mdash;closing down valuable spaces on the field.&lt;/p&gt;
+&lt;p&gt;I acknowledge, however, that the role of modern fullbacks and center backs is continually evolving. In this era, a greater share of the responsibility is placed on them to contribute to offensive actions&amp;mdash;igniting the start of an attacking move and generally positioning themselves higher up the pitch. And for those reasons, the model may well capture enough of what today&amp;rsquo;s scouts are seeking in emerging talents who will fill those positions.&lt;/p&gt;
+&lt;p&gt;The new training set consisted of more than 5,000 observations of 45 input variables each, and the new LSVM model was tuned using 10-fold cross validation and a cost parameter of 1. Its performance was considerably better than previous efforts (0.71 AUC and 74% accuracy), and the resulting coefficients more closely resembled a perceived reality. Actions which most negatively impacted a match&amp;rsquo;s outcome included red cards, yellow cards, and losses in dangerous areas of the player&amp;rsquo;s own half, while some of the actions with the greatest positive values included shots from dangerous areas, opportunity creations, and actions during a counter attacking sequence.&lt;/p&gt;
+&lt;p&gt;Content with those results, I weighted each player&amp;rsquo;s performance using the coefficients, resulting in their raw score for each match.&lt;/p&gt;
+&lt;h2 id=&#34;weighting-by-competition-strength&#34;&gt;Weighting by Competition Strength&lt;/h2&gt;
+&lt;p&gt;One of a scout&amp;rsquo;s greatest challenges must be projecting how a player&amp;rsquo;s performance will translate across leagues and/or national boundaries. As a result, this was another key consideration in constructing our model.&lt;/p&gt;
+&lt;p&gt;Recently, I&amp;rsquo;ve seen an analysis such as this &lt;a href=&#34;https://www.optasportspro.com/news-analysis/blog-counting-across-borders/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;conducted by Ben Torvaney&lt;/a&gt; for OptaPro&amp;rsquo;s 2018 Analytics Forum, and the same approach would have transferred well to our application. However, given some functional constraints&amp;mdash;namely, time and computational power&amp;mdash;we determined that it would be beyond the scope of our assignment to carry out an analysis to such an extent. That is, while our data set was large enough to have a considerable number of players transferring among different leagues, our approach would need to produce a similar outcome, while not holding constant the performance of each individual player, nor differences in age.&lt;/p&gt;
+&lt;p&gt;Instead, for the domestic competitions for which there was enough data, I calculated each player&amp;rsquo;s average performance rating, standardized per 96 minutes on the field (the average length of the matches in our data set), and excluded instances of those who played fewer than 10 matches (i.e., 960 minutes) in each competition. Using a single competition as an index, I applied the &lt;a href=&#34;http://www.sumsar.net/best_online/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bayesian estimation supersedes the t-test (BEST) model&lt;/a&gt; to determine the expected difference of means between each pair of competitions. The outputs of this model informed the competition weights later applied to each raw player performance rating.&lt;/p&gt;
+&lt;p&gt;Once again, the results of this analysis mostly held up against a perceived reality. My index, the Russian Premier League, was weaker in strength than Italy&amp;rsquo;s Serie A, the German Bundesliga, and the top divisions in both Argentina and Brazil, while it was far greater in strength than all of the regional and developmental leagues included in the data set.&lt;/p&gt;
+&lt;h2 id=&#34;player-positions-and-versatility&#34;&gt;Player Positions and Versatility&lt;/h2&gt;
+&lt;p&gt;In their analysis, the Italian researchers clustered outfield players into eight different position types, based on the locations of their on-the-ball actions. A depiction of the resulting clusters is below.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/dss-position-clusters.png&#34; alt=&#34;Clusters of the eight different position types.&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;We determined that these clusters will inform the position variable applied to our final decision model. However, given that Wyscout&amp;rsquo;s data already includes positional information for each match and player, itself informed by cluster analysis, there was no demonstrated need to draw our own positional clusters.&lt;/p&gt;
+&lt;p&gt;Though we&amp;rsquo;ve yet to apply it, another key attribute of the Italian researchers&#39; findings is the concept of versatility. In short, by evaluating how well and/or consistently a given player performs when assigned to different types of positions, we could feasibly quantify how versatile he or she is&amp;mdash;often a sought-after trait, particularly for younger players.&lt;/p&gt;
+&lt;h2 id=&#34;future-considerations&#34;&gt;Future Considerations&lt;/h2&gt;
+&lt;p&gt;Our next major task will be using the weighted performance values, derived using the steps above, to project the future skill levels of young talents. In a perfect world, we would have a data set of players robust enough to establish projections similarly to the &lt;a href=&#34;https://drive.google.com/file/d/13o9yf8A6SXmMPEZWpM-_v0MS3K0aFSEo/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;approach taken by Dutch company SciSports&lt;/a&gt;. They are able to use a clustering algorithm to associate young players with established players who exhibited similar traits when they were of a similar age. An average trajectory, therefore, of that set of established players is used to quantify the young players&#39; likely progression and ceiling.&lt;/p&gt;
+&lt;p&gt;However, given that we have not developed such a robust data set for our prototype, we&amp;rsquo;ll likely apply a forecasting model to serve the same purpose. One major wrinkle, for which we&amp;rsquo;ve yet to come up with a solution, is sufficiently accounting for gaps in performances caused by 1) injuries or 2) off-seasons.&lt;/p&gt;
+&lt;p&gt;Once our projections are established, that will put us in a strong position to deliver a prototype DSS which accurately weighs all factors, as defined by the user. Again, the efficacy of our model hinges on two key components: talent maximization (in the short-, medium-, or long-term) and cost minimization. By default, these two features will already be the top two when the user is prompted to rank-order the factors which matter most to them. (The user will also be prompted to state whether they are building for the present or future with each transfer, which will adjust the emphasis that the decision model places on current versus future skill levels.)&lt;/p&gt;
+&lt;p&gt;In order to generate the set of feature weights for the decision model, the &lt;a href=&#34;https://taragonmd.github.io/2018/08/11/criteria-weights-for-decision-making-the-easy-way/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ratio ordinal method&lt;/a&gt; will be applied, with the decision maker&amp;rsquo;s ranked-order selections serving as the inputs. The resulting weights will inform the &lt;a href=&#34;https://www.sciencedirect.com/science/article/pii/S0305048315001243&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS) model&lt;/a&gt; and help generate the final output: a ranked-order list of optimal transfer targets. The TOPSIS model is based on the assumption that, &amp;ldquo;the optimal alternative should have the shortest distance from the ideal solution and the farthest distance from the negative-ideal solution.&amp;rdquo; It was selected for its ability to both maximize benefit and minimize cost criteria.&lt;/p&gt;
+&lt;h2 id=&#34;top-performing-players-as-things-stand&#34;&gt;Top-Performing Players, As Things Stand&lt;/h2&gt;
+&lt;p&gt;Taking into account only each player&amp;rsquo;s current skill level&amp;mdash;based on performances between July 1, 2018 and February 17, 2019, weighted by competition strength, standardized by minutes played, and segmented by the positional clusters referenced above&amp;mdash;below are the top performers who are currently contracted with clubs in one of the 10 aforementioned countries:&lt;/p&gt;
+&lt;h4 id=&#34;left-sided-attacker&#34;&gt;Left-sided Attacker&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;O. Sparre Klitten, AaB U19&lt;/li&gt;
+&lt;li&gt;A. Erokhin, Zenit&lt;/li&gt;
+&lt;li&gt;J. Okkels, Silkeborg&lt;/li&gt;
+&lt;li&gt;G. Masouras, Olympiakos Piraeus&lt;/li&gt;
+&lt;li&gt;Rafa Silva, Benfica&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;central-forward&#34;&gt;Central Forward&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;P. Onuachu, Midtjylland&lt;/li&gt;
+&lt;li&gt;L. de Jong, PSV&lt;/li&gt;
+&lt;li&gt;S. Kulish, Dnipro-1&lt;/li&gt;
+&lt;li&gt;A. Razborov, Irtysh&lt;/li&gt;
+&lt;li&gt;I. de Camargo, Mechelen&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;right-sided-attacker&#34;&gt;Right-sided Attacker&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;O. Tkachuk, Oleksandria U21&lt;/li&gt;
+&lt;li&gt;E. Smyrnyi, Dynamo Kyiv U21&lt;/li&gt;
+&lt;li&gt;Marcos Junior, UD Oliveirense&lt;/li&gt;
+&lt;li&gt;R. van Wolfswinkel, Basel&lt;/li&gt;
+&lt;li&gt;Z. Aboukhlal, PSV II&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;left-sided-midfielderfullback&#34;&gt;Left-sided Midfielder/Fullback&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;T. Damgaard, Vejle U19&lt;/li&gt;
+&lt;li&gt;J. Christjansen, Lyngby&lt;/li&gt;
+&lt;li&gt;X. Schlager, Salzburg&lt;/li&gt;
+&lt;li&gt;D. Mironov, Leningradets&lt;/li&gt;
+&lt;li&gt;R. van der Venne, Go Ahead Eagles&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;central-midfielder&#34;&gt;Central Midfielder&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Alejandro Pozuelo, Genk&lt;/li&gt;
+&lt;li&gt;K. Aliev, Khimki&lt;/li&gt;
+&lt;li&gt;Taison, Shakhtar Donetsk&lt;/li&gt;
+&lt;li&gt;I. Kogut, Dnipro-1&lt;/li&gt;
+&lt;li&gt;N. Holm Pedersen, Silkeborg U17&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;right-sided-midfielderfullback&#34;&gt;Right-sided Midfielder/Fullback&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;D. de Wit, Ajax&lt;/li&gt;
+&lt;li&gt;V. Grubeck, FC Juniors OÖ&lt;/li&gt;
+&lt;li&gt;A. Grünwald, Austria Wien&lt;/li&gt;
+&lt;li&gt;J. Ekkelenkamp, Ajax II&lt;/li&gt;
+&lt;li&gt;K. Vermeulen, RKC Waalwijk&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;left-sided-central-defender&#34;&gt;Left-sided Central Defender&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;A. Plotnikov, Zenit St. Petersburg II&lt;/li&gt;
+&lt;li&gt;M. Shorkin, Torpedo Moskva&lt;/li&gt;
+&lt;li&gt;S. Reese, Horsens&lt;/li&gt;
+&lt;li&gt;V. Demin, Ufa II&lt;/li&gt;
+&lt;li&gt;Ü. Kurt, Boluspor&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;right-sided-central-defender&#34;&gt;Right-sided Central Defender&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;D. Chistyakov, Tambov&lt;/li&gt;
+&lt;li&gt;M. Goropevšek, Volyn&lt;/li&gt;
+&lt;li&gt;E. Mbende, Cambuur&lt;/li&gt;
+&lt;li&gt;E. Dudikov, Sokol Saratov&lt;/li&gt;
+&lt;li&gt;N. Havenaar, Wil&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Seeing the inclusion of names such as that of PSV forward Luuk de Jong and recent Toronto FC debutant Alejandro Pozuelo is reassuring, and seeing a smattering of reserve and academy players is intriguing. It is either the case that these players are wildly outperforming their peers and the competition weights aren&amp;rsquo;t sensitive enough to these outliers, or that they are actually ready to make the jump up to top-tier play.&lt;/p&gt;
+&lt;h2 id=&#34;closing-thoughts&#34;&gt;Closing Thoughts&lt;/h2&gt;
+&lt;p&gt;In no particular order, here are some parting thoughts on the topic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;From a scouting perspective, it is near impossible to boil down a player&amp;rsquo;s performance to a single metric&amp;mdash;especially if that metric only takes into account event-level data. Even just going through those motions on a relatively small sample of data proved to be immensely difficult.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Given that the volume of on-the-ball defensive actions has a negative correlation with match outcomes, this would not be an optimal method for evaluating defensive abilities. Incorporating some other method, as well as some tracking data, would be necessary.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;As performance data becomes more readily integrated into the day-to-day operations of clubs, one or more of the leading providers of scouting data should consider adding a decision support system to their suite of products. As with any other type of DSS, the need for internal culture shifts and system buy-in will represent the largest obstacles. But considering just how vast the talent pool is, I could foresee a well-built, enterprise-level tool such as this having abundant positive impacts on the efficiency and potency of scouting departments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data: Wyscout&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Valuing Defensive Actions Using Offensive Possession Models</title>
+      <link>https://tylerrichardett.com/blog/2019/03/06/valuing-defensive-actions-using-offensive-possession-models/</link>
+      <pubDate>Wed, 06 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>https://tylerrichardett.com/blog/2019/03/06/valuing-defensive-actions-using-offensive-possession-models/</guid>
+      <description>&lt;p&gt;What&amp;rsquo;s in a pass? What&amp;rsquo;s in a dribble? In isolation, there&amp;rsquo;s not much.&lt;/p&gt;
+&lt;p&gt;However, when we chain those passes and dribbles together into sequences and possessions, we can learn a lot about buildup play through event-level data. It may be that the pass which came &lt;em&gt;four&lt;/em&gt; actions prior to the shot was more consequential than the key pass which led &lt;em&gt;directly&lt;/em&gt; to the shot&amp;mdash;and new models are beginning to draw out these subtle nuances.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Flip that concept on its head, and we have a serviceable metric for defensive ability.&lt;/strong&gt; Among other examples, we can determine when pressure scenarios are forcing the ball into less dangerous areas, which players are consistently turning the ball over at inopportune moments, and which players are shutting plays down in the most crucial moments.&lt;/p&gt;
+&lt;p&gt;If you haven&amp;rsquo;t already, take a moment to read Karun Singh&amp;rsquo;s post on what he calls &lt;a href=&#34;https://karun.in/blog/expected-threat.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;expected threat (XT)&lt;/a&gt; and Derrick Yam&amp;rsquo;s post on StatsBomb&amp;rsquo;s &lt;a href=&#34;https://statsbomb.com/2019/02/attacking-contributions-markov-models-for-football/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ball progression model&lt;/a&gt;. Both center on offensive production and chance &lt;em&gt;creation&lt;/em&gt;, whereas this post will focus primarily on defensive ability and chance &lt;em&gt;elimination&lt;/em&gt;. Karun&amp;rsquo;s model in particular is integral to the analysis that follows, so I&amp;rsquo;ll do my best to reprise that information in the next section.&lt;/p&gt;
+&lt;h2 id=&#34;karuns-xt-model&#34;&gt;Karun&amp;rsquo;s xT Model&lt;/h2&gt;
+&lt;p&gt;Traditional approaches to measuring value are extensions of &lt;a href=&#34;https://www.americansocceranalysis.com/explanation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;expected goal (xG) models&lt;/a&gt;&amp;mdash;they only recognize the actions which lead directly to optimal shooting opportunities. Motivated by a desire to credit the incisive pass that came from the visionary creative midfielder three moves prior to the goal, analyst Karun Singh &amp;ldquo;looked beyond checkmate.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;First, the field is divided into a number of zones&amp;mdash;192, in this case&amp;mdash;and each zone holds an inherent value. That value is determined by historical event data, and it signifies the probability of a goal being scored in the current position, given that the attacking team holds possession in that zone.&lt;/p&gt;
+&lt;p&gt;When in possession, an attacking player has two choices: move the ball or shoot. So, the value of a zone is the weighted sum of the probability of scoring after passing or dribbling the ball and the probability of scoring directly from a shot.&lt;/p&gt;
+&lt;p&gt;For example, if an attacking player chooses to shoot from a particular zone 15 percent of the time, and shots from that position result in goals just 10 percent of the time, the weighted value of a shot is 1.5 percent, or 0.015. The remaining 85 percent of the time, an attacking player chooses to move the ball into another zone, and sequences originating from the current position lead to goals just 8 percent of the time&amp;mdash;resulting in a weighted value of 6.8 percent, or 0.068. The zone, then, holds a value of 0.083 (0.015 + 0.068).&lt;/p&gt;
+&lt;p&gt;The original formula is detailed below, where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;\(xT_{x,y}\) is the value of a given zone;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;\(s_{x,y}\) is the probability that an attacking player will shoot from a given zone;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;\(g_{x,y}\) is the probability that a shot from a given zone will result in a goal;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;\(m_{x,y}\) is the probability that an attacking player will pass or dribble from a given zone; and&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;\(\sum_{z=1}^{16} \sum_{w=1}^{12} T_{(x,y) \rightarrow (z,w)} V_{(z,w)}\) is the probability that a pass or dribble from a given zone will lead to goal within the same sequence (weighted sum over the other 191 zones).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$xT_{x,y}=(s_{x,y} \times g_{x,y})+(m_{x,y} \times \sum_{z=1}^{16} \sum_{w=1}^{12} T_{(x,y) \rightarrow (z,w)} V_{(z,w)})$$&lt;/p&gt;
+&lt;p&gt;Attacking players are then scored on each pass and dribble, where the value added or deducted is equal to the value of the zone in which the move ends, subtracted by the value of the zone in which the move began (i.e., \(xT_{z,w}-xT_{x,y}\)).&lt;/p&gt;
+&lt;h2 id=&#34;xt-adaptation&#34;&gt;xT Adaptation&lt;/h2&gt;
+&lt;p&gt;For the purposes of this analysis, I made two adjustments to Karun’s approach. First, I included incomplete moves as a third potential outcome. I set their value at zero, and this deflated the xT values across the board. The formula itself doesn’t change, but \(s_{x,y}+m_{x,y}=1-i_{x,y}\), where \(i_{x,y}\) is the probability that an incomplete move will occur from a given zone (rather than \(s_{x,y}+m_{x,y}=1\) from the original xT formula).&lt;/p&gt;
+&lt;p&gt;Second, I had a burning desire for all my zones to be perfect squares, so I divided the pitch 18 ways from endline to endline and 12 ways from touchline to touchline, resulting in 216 zones. Each zone is 44.4 square yards.&lt;/p&gt;
+&lt;h2 id=&#34;applying-the-revised-xt-model-to-the-2018--19-fa-womens-super-league-season&#34;&gt;Applying the Revised xT Model to the 2018&amp;ndash;19 FA Women&amp;rsquo;s Super League Season&lt;/h2&gt;
+&lt;p&gt;Taking advantage of &lt;a href=&#34;https://github.com/statsbomb/open-data&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;event-level data&lt;/a&gt; generously made available for free by StatsBomb, I applied my adapted xT model to the latest FA Women&amp;rsquo;s Super League season, through mid-February. The results, below, are consistent with expectations: Possessing the ball in and around the goal area yields a higher chance of scoring. Of note, the relative probability of scoring from corners is greater in the FA WSL than it was in the &lt;a href=&#34;https://karun.in/blog/expected-threat.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;2017&amp;ndash;18 Premier League season&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/fawsl-xt-heatmap.png&#34; alt=&#34;Heatmap showing the zones on the field from which the most xT is generated in the 2018-19 FA Women&amp;amp;rsquo;s Super League season (through February 19).&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;valuing-defensive-actions-xte&#34;&gt;Valuing Defensive Actions (xTE)&lt;/h2&gt;
+&lt;p&gt;With values assigned to each of the 216 zones, I created value functions for each of the following actions with defensive implications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Blocked shots&lt;/li&gt;
+&lt;li&gt;Clearances&lt;/li&gt;
+&lt;li&gt;Fouls committed&lt;/li&gt;
+&lt;li&gt;Interceptions&lt;/li&gt;
+&lt;li&gt;Pressure situations&lt;/li&gt;
+&lt;li&gt;Shots allowed&lt;/li&gt;
+&lt;li&gt;Turnovers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Missing from this list are own goals and offside decisions. From this point forward, bemoaning a lack of tracking data will become a common theme: Without it, accurately assigning blame or credit to the relevant player(s) on own goals and offside decisions would be far too difficult.&lt;/p&gt;
+&lt;p&gt;To keep with the trend of affixing an &lt;em&gt;x&lt;/em&gt; to the beginning each advanced metric in the sport, we&amp;rsquo;ll refer to these defensive values as &lt;em&gt;xTE&lt;/em&gt;, or &lt;em&gt;expected threat eliminated&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;blocked-shots&#34;&gt;Blocked Shots&lt;/h3&gt;
+&lt;p&gt;The expected threat (xT) of a shot could be derived from its expected goals (xG) value, which has already been modeled out and included in the StatsBomb data set. By blocking a goal-bound shot, a defender is effectively eliminating that threat altogether&amp;mdash;unless, of course, the ball is ricocheted toward an attacker in another position on the field, or out for a corner.&lt;/p&gt;
+&lt;p&gt;As such, the xTE function for blocked shots is as follows, where \(xG_{Shot}\) is the expected goals value of the shot that is blocked, and \(xT_{z,w}\) is the expected threat value for the zone in which the ball is retrieved by an attacker, following the blocked shot. When the defense regains possession immediately following a blocked shot, \(xT_{z,w}\) is equal to zero. If the offense gains a corner kick as the direct result of a blocked shot, \(xT_{z,w}\) is equal to the probability of scoring in the sequence initiated by a corner kick.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Blocked,Shot}=xG_{Shot}-xT_{z,w}$$&lt;/p&gt;
+&lt;h3 id=&#34;clearances&#34;&gt;Clearances&lt;/h3&gt;
+&lt;p&gt;The threat eliminated by way of clearances can be thought of as the reverse of the threat gained via passing or dribbling. In this context, I subtract the value of the zone to which the ball is cleared (\(xT_{z,w}\)) from the value of the zone from which the ball is cleared (\(xT_{x,y}\)).&lt;/p&gt;
+&lt;p&gt;Positive values are the result of clearing the ball from a dangerous area to a less dangerous one, whereas negative values are the result of clearing the ball into a more dangerous area. The xTE function for clearances is as follows. When the defense regains possession immediately following a clearance, \(xT_{z,w}\) is equal to zero. If the offense gains a corner kick as the direct result of a clearance, \(xT_{z,w}\) is equal to the probability of scoring in the sequence initiated by a corner kick.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Clearance}=xT_{x,y}-xT_{z,w}$$&lt;/p&gt;
+&lt;h3 id=&#34;fouls-committed&#34;&gt;Fouls Committed&lt;/h3&gt;
+&lt;p&gt;Due to a small sample size of direct free kicks, I was only able to apply the following function in order to calculate the value of conceding a penalty kick. (In an ideal world, with enough data, we could use this same approach to quantitatively define what a “good foul” looks like, outside of the penalty area.)&lt;/p&gt;
+&lt;p&gt;The xTE function for fouls committed is as follows, where \(xT_{x,y}\) is the expected threat of the zone in which the foul occurred, \(P(G|DK_{x,y},or,PK)\) is the probability of scoring in the sequence initiated by a direct free kick taken in the same zone, or of scoring directly from a penalty kick.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Foul,Committed}=xT_{x,y}-P(G|DK_{x,y},or,PK)$$&lt;/p&gt;
+&lt;h3 id=&#34;interceptions&#34;&gt;Interceptions&lt;/h3&gt;
+&lt;p&gt;An interception reverses possession, thus effectively eliminating all attacking threats. Therefore, the xTE function for interceptions is simply equal to the value of the zone in which the intended recipient of the pass is located (\(xT_{z,w}\)).&lt;/p&gt;
+&lt;p&gt;$$xTE_{Interception}=xT_{z,w}$$&lt;/p&gt;
+&lt;h3 id=&#34;pressure-situations&#34;&gt;Pressure Situations&lt;/h3&gt;
+&lt;p&gt;A defensive player’s decision to pressure the ball is evaluated by looking at the corresponding pass or dribble attempt. Similarly to clearances, I subtract the value of the zone to which the ball ends up (\(xT_{z,w}\)) from the value of the zone from which the movement began (\(xT_{x,y}\)).&lt;/p&gt;
+&lt;p&gt;Positive values imply that the defensive player has forced the attacker to move the ball away from goal—either in a backward direction, or toward one of the two touchlines—while negative values imply that the defensive player’s pressure was ineffective, directly resulting in a more dangerous attacking scenario. The xTE function for pressure situations is as follows. When the defense regains possession immediately following a pressure situation, \(xT_{z,w}\) is equal to zero. If the offense gains a corner kick as the direct result of a pressure situation, \(xT_{z,w}\) is equal to the probability of scoring in the sequence initiated by a corner kick.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Pressure}=xT_{x,y}-xT_{z,w}$$&lt;/p&gt;
+&lt;h3 id=&#34;shots-allowed&#34;&gt;Shots Allowed&lt;/h3&gt;
+&lt;p&gt;The primary objective of this component was to identify instances in which a defender did not take an optimal position in reference to their marker, thus leading to a shot. To borrow again from Karun&amp;rsquo;s work, observe the following scenario:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/ozil-second-assist.gif&#34; alt=&#34;An incisive ball from Arsenal&amp;amp;rsquo;s Mesut Özil indirectly leads to a goal for Pierre-Emerick Aubameyang against Burnley.&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Guilty of ball-watching, Burnley defender Kevin Long loses sight of Arsenal striker Pierre-Emerick Aubameyang, allowing Aubameyang just enough space to receive the ball and score. As a result, Long ought to shoulder the blame.&lt;/p&gt;
+&lt;p&gt;The xTE function for shots allowed is as follows, where \(xG_{Shot}\) is the expected goals value of the corresponding shot, and \(n\) is the number of defenders within a certain distance of the shooter. In my execution, I chose to share the blame among all defenders within 2 yards of the shooter.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Shot,Allowed}= \frac{-xG_{Shot}}{n}$$&lt;/p&gt;
+&lt;p&gt;I also chose not to place any blame on defenders caught in breakaway scenarios (i.e., when there is no other defender, other than the goalkeeper, vertically within 10 yards of the ball). Many times, it isn&amp;rsquo;t &lt;em&gt;that&lt;/em&gt; defender&amp;rsquo;s turnover which leads to such a dangerous opportunity; though if it is, they will be penalized by the turnovers function. This exception isn&amp;rsquo;t captured by the function; rather, these situations were simply filtered out.&lt;/p&gt;
+&lt;p&gt;Either of the two aforementioned parameters (i.e., distance to the shot and breakaway distance) could be adapted as needed. Regardless, this isn&amp;rsquo;t a perfect solution for identifying marking responsibilities, and it&amp;rsquo;s another situation in which the application of tracking data (to &lt;a href=&#34;http://www.lukebornn.com/papers/franks_ssac_2015.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;capture defensive responsibilities&lt;/a&gt;) would be particularly welcome.&lt;/p&gt;
+&lt;h3 id=&#34;turnovers&#34;&gt;Turnovers&lt;/h3&gt;
+&lt;p&gt;Finally, turnovers were important to account for from a defensive standpoint, as they gift an attacking threat to the opposing team. Each of the three possible types—incomplete passes, being dispossessed, and miscontrols—can be applied to the following xTE function, where \(xT_{z,w}\) is the value of the zone in which the pass or dribble immediately following the turnover ends. As with shots allowed, all values are negative.&lt;/p&gt;
+&lt;p&gt;$$xTE_{Turnover}= -xT_{z,w}$$&lt;/p&gt;
+&lt;h2 id=&#34;rating-defensive-players-in-the-2018--19-fa-wsl-season&#34;&gt;Rating Defensive Players in the 2018&amp;ndash;19 FA WSL Season&lt;/h2&gt;
+&lt;p&gt;The table below shows the top 20 players with the highest cumulative xTE values. Ten of the 11 teams in the league have at least one representative, with Bristol City, Liverpool, and Yeovil Town having three. Based on a quick glance at the &lt;a href=&#34;http://web.archive.org/web/20190306234431/https://www.bbc.com/sport/football/womens-super-league/table&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;league table&lt;/a&gt;, the first two check out. Bristol City and Liverpool offenses are relatively ineffective, and it has been their defensive performances that have kept them out of the relegation spot. Last-place Yeovil Town is a different story&amp;mdash;they have conceded 42 goals over 14 matches&amp;mdash;and the inclusion of these players is likely due to the opposing offenses&#39; constant bombardment more than anything else.&lt;/p&gt;
+&lt;p&gt;Finally, seeing the name of England and league-leading Manchester City captain, Steph Houghton, tells me I&amp;rsquo;ve done something correct here.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Rank&lt;/th&gt;
+&lt;th&gt;Player&lt;/th&gt;
+&lt;th&gt;Team&lt;/th&gt;
+&lt;th&gt;xTE&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;Frankie Brown&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;5.062&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;Sophie Elizabeth Bradley-Auckland&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;5.01&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;Gemma Evans&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;4.46&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;Stephanie Houghton&lt;/td&gt;
+&lt;td&gt;Manchester City WFC&lt;/td&gt;
+&lt;td&gt;4.019&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;Hannah Short&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;3.986&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;Gilly Louise Scarlett Flaherty&lt;/td&gt;
+&lt;td&gt;West Ham United LFC&lt;/td&gt;
+&lt;td&gt;3.341&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;Kirstyn Pearce&lt;/td&gt;
+&lt;td&gt;Reading WFC&lt;/td&gt;
+&lt;td&gt;3.263&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;Ellie Mason&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;2.749&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;Victoria Williams&lt;/td&gt;
+&lt;td&gt;Brighton &amp;amp; Hove Albion WFC&lt;/td&gt;
+&lt;td&gt;2.692&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;Danique Kerkdijk&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;2.618&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;Georgia Brougham&lt;/td&gt;
+&lt;td&gt;Everton LFC&lt;/td&gt;
+&lt;td&gt;2.617&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;Brooke Hendrix&lt;/td&gt;
+&lt;td&gt;West Ham United LFC&lt;/td&gt;
+&lt;td&gt;2.593&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;Gabrielle George&lt;/td&gt;
+&lt;td&gt;Everton LFC&lt;/td&gt;
+&lt;td&gt;2.474&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;Meaghan Sargeant&lt;/td&gt;
+&lt;td&gt;Birmingham City WFC&lt;/td&gt;
+&lt;td&gt;2.421&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;Nicola Cousins&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;2.256&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;Millie Bright&lt;/td&gt;
+&lt;td&gt;Chelsea LFC&lt;/td&gt;
+&lt;td&gt;2.195&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;Rhiannon Roberts&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;2.128&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;Kerys Harrop&lt;/td&gt;
+&lt;td&gt;Birmingham City WFC&lt;/td&gt;
+&lt;td&gt;1.783&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;Magdalena Ericsson&lt;/td&gt;
+&lt;td&gt;Chelsea LFC&lt;/td&gt;
+&lt;td&gt;1.58&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;Niamh Fahey&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;1.565&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;accounting-for-opponents-offensive-strength&#34;&gt;Accounting for Opponents&#39; Offensive Strength&lt;/h2&gt;
+&lt;p&gt;In an attempt to take these rankings one step further, I weighted the xTE value of each defensive action by the opposing team&amp;rsquo;s offensive potency. So, when a defender squares up against a consistently dangerous attack, her positive defensive actions (such as clearances) will earn a greater positive value, but her negative unfavorable defensive actions (such as turnovers) will earn a greater negative value.&lt;/p&gt;
+&lt;p&gt;First, I attempted to create an xT matrix for each team in the league, but I was unsuccessful, as the sample sizes were too small&amp;mdash;particularly for the weakest teams:&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/fawsl-xt-team-heatmap.png&#34; alt=&#34;Heatmap showing the zones on the field from which the most xT is generated in the 2018-19 FA Women&amp;amp;rsquo;s Super League season (through February 19), broken out by attacking team.&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;To weight the opposing team&amp;rsquo;s attack, I instead used the offensive coefficients generated for each team by the &lt;a href=&#34;http://web.math.ku.dk/~rolf/teaching/thesis/DixonColes.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dixon-Coles model&lt;/a&gt;, the inputs for which are the current season&amp;rsquo;s results. (The &lt;code&gt;dixoncoles&lt;/code&gt; function in Ben Torvaney&amp;rsquo;s &lt;a href=&#34;https://github.com/Torvaney/regista&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;regista&lt;/code&gt; package&lt;/a&gt; proved helpful in doing so.)&lt;/p&gt;
+&lt;p&gt;The revised table of top 20 players, based on weighted xTE values, is below. It includes the same 20 players, though their order has shuffled. Upward movement could be an indicator of which defenders &amp;ldquo;show up [or make fewer mistakes] in the big games.&amp;rdquo;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Rank&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Player&lt;/th&gt;
+&lt;th&gt;Team&lt;/th&gt;
+&lt;th&gt;Weighted xTE&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&amp;ndash;&lt;/td&gt;
+&lt;td&gt;Frankie Brown&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;7.959&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;▲ 1&lt;/td&gt;
+&lt;td&gt;Gemma Evans&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;5.991&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;▼ 1&lt;/td&gt;
+&lt;td&gt;Sophie Elizabeth Bradley-Auckland&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;5.692&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&amp;ndash;&lt;/td&gt;
+&lt;td&gt;Stephanie Houghton&lt;/td&gt;
+&lt;td&gt;Manchester City WFC&lt;/td&gt;
+&lt;td&gt;4.936&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;▲ 5&lt;/td&gt;
+&lt;td&gt;Danique Kerkdijk&lt;/td&gt;
+&lt;td&gt;Bristol City WFC&lt;/td&gt;
+&lt;td&gt;4.118&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;▲ 8&lt;/td&gt;
+&lt;td&gt;Meaghan Sargeant&lt;/td&gt;
+&lt;td&gt;Birmingham City WFC&lt;/td&gt;
+&lt;td&gt;3.928&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;▲ 2&lt;/td&gt;
+&lt;td&gt;Victoria Williams&lt;/td&gt;
+&lt;td&gt;Brighton &amp;amp; Hove Albion WFC&lt;/td&gt;
+&lt;td&gt;3.856&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;▲ 5&lt;/td&gt;
+&lt;td&gt;Gabrielle George&lt;/td&gt;
+&lt;td&gt;Everton LFC&lt;/td&gt;
+&lt;td&gt;3.84&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;▼ 3&lt;/td&gt;
+&lt;td&gt;Gilly Louise Scarlett Flaherty&lt;/td&gt;
+&lt;td&gt;West Ham United LFC&lt;/td&gt;
+&lt;td&gt;3.819&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;▼ 3&lt;/td&gt;
+&lt;td&gt;Kirstyn Pearce&lt;/td&gt;
+&lt;td&gt;Reading WFC&lt;/td&gt;
+&lt;td&gt;3.808&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;▼ 6&lt;/td&gt;
+&lt;td&gt;Hannah Short&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;3.699&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;&amp;ndash;&lt;/td&gt;
+&lt;td&gt;Brooke Hendrix&lt;/td&gt;
+&lt;td&gt;West Ham United LFC&lt;/td&gt;
+&lt;td&gt;3.624&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;▼ 2&lt;/td&gt;
+&lt;td&gt;Georgia Brougham&lt;/td&gt;
+&lt;td&gt;Everton LFC&lt;/td&gt;
+&lt;td&gt;3.532&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;▼ 6&lt;/td&gt;
+&lt;td&gt;Ellie Mason&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;3.474&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;▲ 4&lt;/td&gt;
+&lt;td&gt;Magdalena Ericsson&lt;/td&gt;
+&lt;td&gt;Chelsea LFC&lt;/td&gt;
+&lt;td&gt;2.96&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;▲ 1&lt;/td&gt;
+&lt;td&gt;Rhiannon Roberts&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;2.791&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;▲ 1&lt;/td&gt;
+&lt;td&gt;Kerys Harrop&lt;/td&gt;
+&lt;td&gt;Birmingham City WFC&lt;/td&gt;
+&lt;td&gt;2.458&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;▼ 3&lt;/td&gt;
+&lt;td&gt;Nicola Cousins&lt;/td&gt;
+&lt;td&gt;Yeovil Town LFC&lt;/td&gt;
+&lt;td&gt;2.455&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;▼ 3&lt;/td&gt;
+&lt;td&gt;Millie Bright&lt;/td&gt;
+&lt;td&gt;Chelsea LFC&lt;/td&gt;
+&lt;td&gt;2.303&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&amp;ndash;&lt;/td&gt;
+&lt;td&gt;Niamh Fahey&lt;/td&gt;
+&lt;td&gt;Liverpool WFC&lt;/td&gt;
+&lt;td&gt;2.288&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;closing-thoughts&#34;&gt;Closing Thoughts&lt;/h2&gt;
+&lt;p&gt;In no particular order, here are some parting thoughts on the topic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Defensive statistics are difficult, and it&amp;rsquo;s no wonder that this aspect of the game continues to be under-analyzed. The type and volume of a defender&amp;rsquo;s work varies game-to-game, and it&amp;rsquo;s entirely dependent on the opponent&amp;rsquo;s actions. A defender can&amp;rsquo;t make work for herself; she can only respond to an onrushing attack. And it could be argued that the most valuable work is done entirely off the ball&amp;mdash;by occupying key spaces on the field and forcing the opponent to attack via a less-optimal channel.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For these reasons, and in the interest of time, I did not regularize the xTE metrics in the table above. Arsenal&amp;rsquo;s defensive players must be good to play for Arsenal (the only team of the 11 that is missing), of course, but this transformation will likely not ensure their appearance on these lists, either. They may rarely be put in positions to show off their talents in any of the manners listed above&amp;mdash;because their offense retains a high share of possession each match, or their defense plays a high line and those defensive actions take place in less valuable areas of the pitch, or a mixture of both.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Incorporating tracking data into models such as these will be monumental, and &lt;a href=&#34;http://www.lukebornn.com/papers/fernandez_ssac_2019.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;some of that work is already underway&lt;/a&gt;&amp;mdash;primarily on the offensive side of the ball. Again, a defender&amp;rsquo;s most valuable contributions may be instances in which her mere existence convinces offenses to try another route toward goal. That nuance is lost with only event-level data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;xTE, as well as xT, are one-dimensional metrics. But, combining these values, as well as some metric to represent duel outcomes, may be a nifty way of calculating players&#39; overall contributions. (Think &lt;a href=&#34;http://www.82games.com/barzilai2.htm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;plus-minus stats&lt;/a&gt; in the NBA, minus the regression.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Data: StatsBomb&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>U.S. Soccer Can&#39;t Afford to Continue Ignoring Children from Traditionally Underserved Communities</title>
+      <link>https://tylerrichardett.com/blog/2018/10/11/u.s.-soccer-cant-afford-to-continue-ignoring-children-from-traditionally-underserved-communities/</link>
+      <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://tylerrichardett.com/blog/2018/10/11/u.s.-soccer-cant-afford-to-continue-ignoring-children-from-traditionally-underserved-communities/</guid>
+      <description>&lt;p&gt;&lt;em&gt;This article was originally published in the &lt;a href=&#34;https://www.newamerica.org/weekly/america-cant-afford-ignore-vast-whiteness-soccer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;New America Weekly&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;One year ago Wednesday, a small, then-waterlogged village on the Trinidadian coastline served as the backdrop for American soccer’s terrible, horrible, no good, very bad day. With tired legs cemented firmly in a muddy pitch for 90 minutes, the U.S. men’s national soccer team tried, and failed, to qualify for this past summer’s FIFA World Cup. Now known in soccer circles as “Couva,” after the aforementioned village, the collapse, for the United States, marks the lowest point in the sport’s last two-plus decades.&lt;/p&gt;
+&lt;p&gt;Just one day before the world’s biggest party kicked off in Russia, though, the United States was &lt;a href=&#34;http://www.espn.com/soccer/fifa-world-cup/4/blog/post/3524721/how-2026-world-cup-bid-was-won-by-canada-mexico-and-the-usa&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;thrown&lt;/a&gt; a lifeline: the rights to host the tournament in 2026. (Well, 75 percent of it.) Participation in a World Cup, alone, offers several things: a chance for soccer to be relevant in an American landscape still dominated by other sports, the opportunity to welcome the next cohort of aspiring young stars into our expansive youth system, and an influx of sponsorship dollars to keep the whole operation running. &lt;em&gt;Hosting&lt;/em&gt; a World Cup offers the same—in multitudes.&lt;/p&gt;
+&lt;p&gt;But experts have &lt;a href=&#34;https://www.reuters.com/article/us-soccer-worldcup-fifa-2026-usa/boon-expected-for-u-s-soccer-but-no-sea-change-as-world-cup-2026-co-hosts-idUSKBN1JA18F&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;warned&lt;/a&gt; not to expect a dramatic spike in youth participation. Two things stand in its way. First, soccer in the United States has a much stronger &lt;a href=&#34;https://www.nbcnews.com/storyline/fifa-corruption-scandal/soccer-numbers-look-game-u-s-n365601&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;foothold&lt;/a&gt; this time around; growth rates will inevitably be smaller with a less-modest starting point. And second, and more important, youth soccer in the United States isn’t built to accommodate or sustain growth. That is, it’s exhausted the population of white children from well-off, suburban families who’ve long filled its ranks. Without &lt;em&gt;finally&lt;/em&gt; paving pathways for children from traditionally underserved populations, long &lt;a href=&#34;https://www.theguardian.com/football/blog/2016/jun/01/us-soccer-diversity-problem-world-football&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;excluded&lt;/a&gt; from “the world’s great democratic game,” the U.S. soccer system will never enter the next stage of growth.&lt;/p&gt;
+&lt;p&gt;Reaching peak success in the mid- to late 1970s, the old North American Soccer League (NASL) poured resources into &lt;a href=&#34;https://vdocuments.site/contextualizing-suburban-soccer-consumer-culture-lifestyle-differentiation.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;establishing&lt;/a&gt; a comprehensive network of grassroots youth soccer programs—the precursor to today’s network—before folding in 1984.&lt;/p&gt;
+&lt;p&gt;This work constructed quite the runway to the 1994 World Cup: Between 1981 and 1991, participation in high school soccer increased by more than 83 percent. In the years immediately following the competition, soccer had secured its position as the second-most popular team sport for Americans under the age of 12 (7.7 million annual participants) by 1995, behind only basketball (9.7 million).&lt;/p&gt;
+&lt;p&gt;Its followers, though, weren’t the ethnic minority groups, based predominantly in urban areas, that had quietly championed the sport in the United States in the preceding decades. Rather, they were white suburbians who, after effectively &lt;a href=&#34;https://www.newamerica.org/weekly/edition-167/persistence-blame-game/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;distancing&lt;/a&gt; themselves geographically and economically from cities in the post-war era, sought further differentiation. Culturally, they embraced cosmopolitanism, and with the blueprint already having been laid by the NASL, soccer, as one sociologist &lt;a href=&#34;https://journals.humankinetics.com/doi/10.1123/ssj.5.2.153&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;put it&lt;/a&gt;, and its “indeterminate signification made it available for ‘different uses.’”&lt;/p&gt;
+&lt;p&gt;Put more bluntly, youth soccer was ripe for appropriation.&lt;/p&gt;
+&lt;p&gt;Now, fast-forward to today, where that reality has played out. Data &lt;a href=&#34;https://tricha3.shinyapps.io/youth-soccer-virginia/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;confirms&lt;/a&gt; that, at least locally, access to competitive youth soccer diminishes as poverty rates rise. Majority-minority neighborhoods possess comparatively fewer opportunities than majority-white ones. And physical distance is the first thing standing in the way.&lt;/p&gt;
+&lt;p&gt;According to a &lt;a href=&#34;https://www.forbes.com/sites/brucelee/2017/12/18/what-to-do-about-sports-participation-dropping-among-kids/2/#b6689215a06d&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;national survey&lt;/a&gt; of sport for development organizations, transportation is one of the largest barriers to access, with respondents “referring to long travel times, insufficient means of transportation, and safety in transport as significant concerns.” And for players who progress through the ranks and into more competitive environments, the demands of travel grow exponentially.&lt;/p&gt;
+&lt;p&gt;Beyond geographic barriers, the “&lt;a href=&#34;http://www.sandiegouniontribune.com/g00/sports/sd-sp-us-soccer-pay-to-play-u20s-20180814-story.html?i10c.encReferrer=&amp;amp;i10c.ua=1&amp;amp;i10c.dv=22&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pay-to-play&lt;/a&gt;” structure sees families shell out thousands of dollars each year, for everything from uniforms to personal trainers. As a result, many more are priced out. (It’s worth noting that this issue is far from unique to soccer. Youth sports, by the latest estimates, &lt;a href=&#34;http://time.com/4913687/how-kids-sports-became-15-billion-industry/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;represent&lt;/a&gt; a $15 billion industry. Local governments are even trying to &lt;a href=&#34;https://www.nytimes.com/2018/09/12/sports/youth-sports-costs.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;cash in&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;All the while, participation has &lt;a href=&#34;https://www.wsj.com/articles/youth-participation-weakens-in-basketball-football-baseball-soccer-1391138849?tesla=y&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stagnated&lt;/a&gt;—or &lt;a href=&#34;https://www.nytimes.com/2018/07/14/sports/world-cup/soccer-youth-decline.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;declined&lt;/a&gt;, depending on your &lt;a href=&#34;http://www.latimes.com/sports/soccer/la-sp-us-soccer-baxter-20180804-story.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;—over the last few years. Fortunately, reversing course isn’t impossible—and neither should it require too forceful an argument.&lt;/p&gt;
+&lt;p&gt;Above all, it’s a moral imperative. Integration of children from different backgrounds through sport &lt;a href=&#34;http://globalsportsdevelopment.org/2016/04/27/sports-as-a-tool-for-social-inclusion-and-social-change/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;promotes&lt;/a&gt; social inclusion. Participation in any sport from a young age is &lt;a href=&#34;https://www.ncys.org/publications/the-benefits-of-youth-sports.php&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;correlated&lt;/a&gt; with improved physical health, psychological health, and academic performance. And, moving all the way to the top of the pyramid, there’s a case to be made for any national team to closely &lt;a href=&#34;https://www.washingtonpost.com/news/parenting/wp/2016/09/09/soccer-in-the-u-s-still-looks-like-its-for-white-girls/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;reflect&lt;/a&gt; the population it represents.&lt;/p&gt;
+&lt;p&gt;Some grassroots organizations have already started chipping away at the issues within their own communities. One solution, for example, sees a &lt;a href=&#34;http://www.msysa.org/get_on_the_bus/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maryland club&lt;/a&gt; meet children from low-income families after school, provide tutoring services and a healthy snack, and bus them straight to practice. Another has seen a &lt;a href=&#34;https://twitter.com/emilydona7/status/1030496931686957057&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Buffalo, N.Y., club&lt;/a&gt; and a &lt;a href=&#34;https://www.aspeninstitute.org/blog-posts/urban-soccer-leadership-academy-opens-doors-latinos-texas/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;San Antonio, Texas, club&lt;/a&gt; carve out safe places to play within urban environments.&lt;/p&gt;
+&lt;p&gt;A non-profit in &lt;a href=&#34;https://www.washingtonpost.com/news/soccer-insider/wp/2017/10/29/in-d-c-a-small-step-toward-tackling-u-s-youth-soccers-accessibility-problem/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Washington, D.C.&lt;/a&gt;, and a club in &lt;a href=&#34;https://medium.com/@LA84Foundation/solving-youth-soccers-diversity-divide-4243f147baa1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Los Angeles, Calif.&lt;/a&gt;, each provide no-cost, competitive opportunities for children and teens of low-income families. The &lt;a href=&#34;https://theundefeated.com/features/u-s-soccer-foundations-got-a-brand-new-pitch/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;U.S. Soccer Foundation&lt;/a&gt; and &lt;a href=&#34;https://www.streetsoccerusa.org/mini-pitches/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Street Soccer USA&lt;/a&gt; introduce the sport to newcomers through unstructured “free play,” building small fields in inner-city neighborhoods.&lt;/p&gt;
+&lt;p&gt;At the national level, a precedent for such change has already been set. Over the last decade or more, USA Swimming has made it a priority to &lt;a href=&#34;https://www.washingtonpost.com/news/parenting/wp/2016/09/09/soccer-in-the-u-s-still-looks-like-its-for-white-girls/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;address&lt;/a&gt; low participation among minority participants. Through the help of research, outreach programs, and mentorship programs for non-white coaches, African-American membership increased by 55 percent, and mixed-ethnicity membership by 77 percent, between 2004 and 2015. These efforts gained widespread attention in 2016, when Simone Manuel &lt;a href=&#34;https://www.npr.org/sections/thetorch/2016/08/13/489614522/usa-swimming-wants-more-diversity-in-the-pool&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;became&lt;/a&gt; the first female African-American swimmer to win an individual Olympic gold medal.&lt;/p&gt;
+&lt;p&gt;A leadership change at the helm of the whole system offers some reason for cautious optimism, too. Carlos Cordeiro, the newly-elected president of the U.S. Soccer Federation, campaigned on a platform that &lt;a href=&#34;http://web.archive.org/web/20180209033522/https://www.carlos4soccer.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;included&lt;/a&gt; making soccer “more accessible and affordable for youth, especially in our cities and underserved communities.” Cordeiro &lt;a href=&#34;https://www.ussoccer.com/about/governance/board-of-directors/us-soccer-president-carlos-cordeiro/remarks-to-us-youth-soccer-annual-general-meeting-july-28-2018&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;echoed&lt;/a&gt; those sentiments as recently as July—already showing more interest in the matter than his predecessor of 12 years. (For reference, his Diversity Task Force webpage looked something &lt;a href=&#34;https://web.archive.org/web/20171120041044/https://www.ussoccer.com/about/governance/committees/diversity-task-force&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;like this&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;Soccer in the United States is at a crossroads. Layered over long-standing exclusionary practices, and reinforced by discriminatory federal housing, economic, and social policies, today’s commoditization of youth sports has left soccer even further beyond the reach of children from underserved communities, despite the fact that drumming up interest among and encouraging participation of young children is critical to the sport’s long-term success stateside. (The &lt;a href=&#34;https://www.ussoccer.com/about/about-us-soccer&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mission&lt;/a&gt; of the U.S. Soccer Federation, after all, is “to make soccer, in all its forms, a preeminent sport in the United States.”)&lt;/p&gt;
+&lt;p&gt;At all levels, the system has ignored plenty of sound reasons to level the playing field. With the 2026 FIFA World Cup looming large, it’s now reached a point at which it needs to change, if for all the wrong reasons.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Four Ways U.S. Soccer&#39;s Youth Task Force Can Make a Difference</title>
+      <link>https://tylerrichardett.com/blog/2018/08/19/four-ways-u.s.-soccers-youth-task-force-can-make-a-difference/</link>
+      <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://tylerrichardett.com/blog/2018/08/19/four-ways-u.s.-soccers-youth-task-force-can-make-a-difference/</guid>
+      <description>&lt;p&gt;With the 2026 FIFA World Cup bid in the rearview mirror, U.S. Soccer President Carlos Cordeiro now has his eyes set on an arguably taller task: opening the ranks of the youth game to those previously &lt;a href=&#34;https://www.theguardian.com/football/blog/2016/jun/01/us-soccer-diversity-problem-world-football&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;shut out&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.socceramerica.com/publications/article/78994/us-soccer-president-carlos-cordeiro-proposes-tas.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Speaking&lt;/a&gt; before U.S. Youth Soccer&amp;rsquo;s annual general meeting last month, the newly-elected president&amp;rsquo;s talking points on the matter matched the ones from the &lt;a href=&#34;https://www.carlos4soccer.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;campaign trail&lt;/a&gt;. &amp;ldquo;The landscape is too fragmented and fractured,&amp;rdquo; Cordeiro started. He also bemoaned an &lt;a href=&#34;https://www.nytimes.com/2010/06/06/magazine/06Soccer-t.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;overemphasis on winning&lt;/a&gt; and the &amp;ldquo;high cost of &amp;lsquo;pay-to-play.&#39;&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;In search of solutions, Cordeiro&amp;rsquo;s pitch to the crowd was a modest one: a task force to assess &amp;ldquo;how we can do better.&amp;rdquo; If and when that task force comes to be, here are some ways it can start forging pathways.&lt;/p&gt;
+&lt;h3 id=&#34;create-a-centralized-system-for-information-sharing&#34;&gt;Create a centralized system for information-sharing.&lt;/h3&gt;
+&lt;p&gt;You can&amp;rsquo;t solve a problem you haven&amp;rsquo;t adequately defined. This may sound obvious, but know that, at this very moment, the sport&amp;rsquo;s leaders don&amp;rsquo;t even have a &lt;a href=&#34;http://www.latimes.com/sports/soccer/la-sp-us-soccer-baxter-20180804-story.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;definitive headcount&lt;/a&gt; of their active participants. By extension, they couldn&amp;rsquo;t possibly know &lt;em&gt;which&lt;/em&gt; players are there, nor which are missing.&lt;/p&gt;
+&lt;p&gt;The task force&amp;rsquo;s first priority must be to answer those questions. And to answer those questions, they&amp;rsquo;ll need to work with member associations to develop a centralized and consistent method of collecting, storing, and analyzing this information.&lt;/p&gt;
+&lt;p&gt;This could be a win-win for all parties. Cordeiro signaled toward strained relationships between the associations and the federation: &amp;ldquo;Some asked whether it still made sense to be a member of the Federation or whether the fees you pay are reasonable.&amp;rdquo; Developing a centralized system for information-sharing rights that ship, and it makes the day-to-day duties of administrators that much easier.&lt;/p&gt;
+&lt;p&gt;Downstream, the benefits may continue to pile up. If sophisticated enough, such a system also has the potential to make scouting and talent identification more efficient. From the perspective of the athlete or parent, it could help them identify and carve out the most optimal pathway forward.&lt;/p&gt;
+&lt;p&gt;Most importantly, however, it&amp;rsquo;s a step toward clearly defining the problem&amp;mdash;ensuring that all members of the task force start from the same place of understanding.&lt;/p&gt;
+&lt;h3 id=&#34;identify-the-areas-with-the-greatest-need&#34;&gt;Identify the areas with the greatest need.&lt;/h3&gt;
+&lt;p&gt;U.S. Youth Soccer CEO Christopher Moore last year &lt;a href=&#34;https://www.youtube.com/watch?v=uCuuYpyJlEQ?t=13m6s&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;admitted&lt;/a&gt;, &amp;ldquo;Knowing who your members are [is] the first step in being able to meet their needs.&amp;rdquo; And in fact, with respect to the previous point, Moore said his organization is taking the steps and building the technologies necessary to do so. One anxiety he shared, however, was that parents from underserved&amp;mdash;most often, Latinx&amp;mdash;communities are reluctant to share accurate demographic information given the current political climate.&lt;/p&gt;
+&lt;p&gt;Well, data analysis is often steeped in logical assumptions and inferences. Identifying high-needs areas in the youth soccer landscape needn&amp;rsquo;t be an exception. A 2007 &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pubmed/17267728&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;study&lt;/a&gt; found that people who reside within a mile of a park are four times more likely to use it than those living farther away. And decades of &lt;a href=&#34;https://www.theatlantic.com/business/archive/2014/05/the-racist-housing-policy-that-made-your-neighborhood/371439/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;federal housing policy&lt;/a&gt; has resulted in the demographically homogeneous neighborhoods that exist today.&lt;/p&gt;
+&lt;p&gt;Therefore, it&amp;rsquo;s not a massive jump to say: If we know where clubs and teams are playing, and if we know the racial and economic makeup of the populations in those areas, we know which kids are included, and which are excluded.&lt;/p&gt;
+&lt;p&gt;A recent &lt;a href=&#34;https://tricha3.shinyapps.io/youth-soccer-virginia/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;study&lt;/a&gt; of competitive youth soccer in Virginia did just that. And the results were in line with long-held assumptions: It&amp;rsquo;s a wealthy, suburban sport. Below, clubs in the Richmond and Norfolk areas are drawn out toward more well-off neighborhoods.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://tylerrichardett.com/img/youth-soccer-va-maps.png&#34; alt=&#34;Maps of the Richmond and Norfolk areas of Virginia show competitive soccer clubs operating out of higher income, more suburban census tracts.&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;With the right data made readily available, the federation, state associations, and non-profit groups could properly target resources so that, in Cordeiro&amp;rsquo;s own words, &amp;ldquo;kids from urban and rural areas and diverse communities can play, too.&amp;rdquo;&lt;/p&gt;
+&lt;h3 id=&#34;shrink-the-map&#34;&gt;Shrink the map.&lt;/h3&gt;
+&lt;p&gt;The task force needs to tackle transportation as aggressively as any other issue. According to a &lt;a href=&#34;https://www.forbes.com/sites/brucelee/2017/12/18/what-to-do-about-sports-participation-dropping-among-kids/2/#b6689215a06d&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;national survey&lt;/a&gt; of sport for development organizations, transportation is one of the largest barriers to access, with respondents, &amp;ldquo;referring to long travel times, insufficient means of transportation, and safety in transport as significant concerns.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;And for players who progress through the ranks and into more competitive environments, the demand of travel &lt;a href=&#34;https://tricha3.shinyapps.io/youth-soccer-virginia/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;grows exponentially&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One solution at the grassroots level sees a &lt;a href=&#34;http://www.msysa.org/get_on_the_bus/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Maryland club&lt;/a&gt; meet children from low-income families after school, provide tutoring services and a healthy snack, and bus them straight to practice. Another solution has seen a &lt;a href=&#34;https://twitter.com/emilydona7/status/1030496931686957057&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Buffalo, N.Y. club&lt;/a&gt; and a &lt;a href=&#34;https://www.aspeninstitute.org/blog-posts/urban-soccer-leadership-academy-opens-doors-latinos-texas/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;San Antonio, Texas club&lt;/a&gt; carve out safe places to play within urban environments.&lt;/p&gt;
+&lt;p&gt;Spare time and money are not amenities afforded to parents working multiple part-time jobs. Often, financial aid can be made available, but as one club administrator wrote to me, that aid is turned down because, &amp;ldquo;they simply cannot get there.&amp;rdquo; For these families, the map needs to shrink.&lt;/p&gt;
+&lt;p&gt;Even Cordeiro has acknowledged, &amp;ldquo;Player development is not a single-lane road.&amp;rdquo;&lt;/p&gt;
+&lt;h3 id=&#34;acknowledge-the-limitations&#34;&gt;Acknowledge the limitations.&lt;/h3&gt;
+&lt;p&gt;It&amp;rsquo;s been beaten into a pulp: There&amp;rsquo;s no silver bullet for these issues. Beyond just that, many of these issues will be tackled for the first time. Cordeiro references an &amp;ldquo;eight-year runway to 2026,&amp;rdquo; but even that sounds ambitious.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This will take time.&lt;/em&gt; And the task force should take the time necessary to get this right.&lt;/p&gt;
+&lt;p&gt;Along the way, the task force needs to involve all the key players at the grassroots level. They understand the nuances specific to their locality, and they will ultimately be the ones carrying out recommendations. Without them, this proposed task force is useless.&lt;/p&gt;
+&lt;p&gt;Finally, it should go without saying, don&amp;rsquo;t lose sight of who matters here. To again borrow from Cordeiro&amp;rsquo;s remarks, &amp;ldquo;That love of the game, those hopes for the future&amp;mdash;that&amp;rsquo;s what youth soccer is all about.&amp;rdquo;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

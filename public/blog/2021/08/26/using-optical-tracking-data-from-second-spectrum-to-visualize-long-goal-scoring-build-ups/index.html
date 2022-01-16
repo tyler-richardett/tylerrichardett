@@ -1,0 +1,875 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.3.0 for Hugo" />
+  
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Tyler Richardett" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Just by plotting each frame of these special goal-scoring sequences, it&#39;s enlightening to see how these attacking teams move and exploit space to ultimately unlock the opposing defense." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/" />
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.818ea8231db17d663eae617dd06048ad.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/manifest.webmanifest" />
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon/android-chrome-192x192.png">
+  <link rel="shortcut icon" sizes="192x192" href="/favicon/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" href="/favicon/android-chrome-192x192.png">
+
+  <link rel="canonical" href="https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Tyler Richardett" />
+  <meta property="og:url" content="https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/" />
+  <meta property="og:title" content="Using Optical Tracking Data from Second Spectrum to Visualize Long Goal-scoring Build-ups | Tyler Richardett" />
+  <meta property="og:description" content="Just by plotting each frame of these special goal-scoring sequences, it&#39;s enlightening to see how these attacking teams move and exploit space to ultimately unlock the opposing defense." /><meta property="og:image" content="https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/featured.jpg" />
+    <meta property="twitter:image" content="https://tylerrichardett.com/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/featured.jpg" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2021-08-26T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2021-08-26T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>Using Optical Tracking Data from Second Spectrum to Visualize Long Goal-scoring Build-ups | Tyler Richardett</title>
+
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="494e472b8fdc594741fb6b8b0ba98e6b" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.7f3e7639f4c7f2a2cf83b68ea7de7f08.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/"><img src="/media/logo_hu63450d64904b2806a1378e907e93ac54_121699_0x70_resize_lanczos_2.png" alt="Tyler Richardett"></a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/"><img src="/media/logo_hu63450d64904b2806a1378e907e93ac54_121699_0x70_resize_lanczos_2.png" alt="Tyler Richardett"></a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/blog"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+          
+          <li class="nav-item d-none d-lg-inline-flex">
+            <a class="nav-link" href="https://github.com/tyler-richardett" target="_blank" rel="noopener" aria-label="github">
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+          </li>
+        
+          
+          <li class="nav-item d-none d-lg-inline-flex">
+            <a class="nav-link" href="https://twitter.com/tylerrichardett" target="_blank" rel="noopener" aria-label="twitter">
+              <i class="fab fa-twitter" aria-hidden="true"></i>
+            </a>
+          </li>
+        
+          
+          <li class="nav-item d-none d-lg-inline-flex">
+            <a class="nav-link" href="https://www.linkedin.com/in/tylerrichardett/" target="_blank" rel="noopener" aria-label="linkedin">
+              <i class="fab fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </li>
+        
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>Using Optical Tracking Data from Second Spectrum to Visualize Long Goal-scoring Build-ups</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      <a href="/author/tyler-richardett/">Tyler Richardett</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Aug 26, 2021
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-tag mr-1"></i><a class="badge badge-light" href="/tag/soccer-analytics/">Soccer Analytics</a><a class="badge badge-light" href="/tag/american-soccer-analysis/">American Soccer Analysis</a><a class="badge badge-light" href="/tag/r/">R</a></span>
+  
+
+</div>
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header container-fluid featured-image-wrapper mt-4 mb-4" style="max-width: 3188px; max-height: 2125px;">
+  <div style="position: relative">
+    <img src="/blog/2021/08/26/using-optical-tracking-data-from-second-spectrum-to-visualize-long-goal-scoring-build-ups/featured.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by <a href="https://unsplash.com/@nathdah"><strong>Nathy dog</strong></a> on <a href="https://unsplash.com/photos/z1uDmJx3ZEQ"><strong>Unsplash</strong></a>.</span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>Two weeks ago, Nashville SC scored a lovely team goal. All 10 field players contributed to a 15-pass sequence, putting Nashville up 2-1 over D.C. United.</p>
+<p>Thanks to <a href="https://www.mlssoccer.com/" target="_blank" rel="noopener">Major League Soccer</a> and <a href="https://www.secondspectrum.com/index.html" target="_blank" rel="noopener">Second Spectrum</a>, some of us lucky folks at <a href="https://www.americansocceranalysis.com/" target="_blank" rel="noopener">American Soccer Analysis</a> have access to 2D tracking data for every regular season and playoff MLS game. Just by plotting each frame of these special goal-scoring sequences, it&rsquo;s enlightening to see how these attacking teams move and exploit space to ultimately unlock the opposing defense.</p>
+<p>Because I used <code>{gridExtra}</code> to arrange each component of the visualizations, I&rsquo;m constructing and exporting each individual frame as a still image. To speed things up, I took advantage of <code>{doParallel}</code> and <code>{foreach}</code> to distribute the workload. And in order for each process&rsquo;s <code>{ggsave}</code> call to be able to write to the same location, I had to set <code>type = &quot;cairo-png&quot;</code>.</p>
+<p>Finally, to stitch all the frames together into an MP4 file, I&rsquo;m leveraging the <code>{mapmate}</code> <a href="https://leonawicz.github.io/mapmate/articles/ffmpeg.html" target="_blank" rel="noopener">wrapper</a> around the <a href="https://www.ffmpeg.org/" target="_blank" rel="noopener">FFmpeg command line tool</a>:</p>
+<pre><code class="language-r">mapmate::ffmpeg(
+    dir = tile_save_path, 
+    pattern = glue::glue(&quot;{save_file_prefix}_%06d.png&quot;),
+    output_dir = gif_mp4_save_path, 
+    output = glue::glue(&quot;{save_file_prefix}.mp4&quot;),
+    rate = export_fps, 
+    start = start_frame, 
+    overwrite = TRUE
+)
+</code></pre>
+<p>This content was originally developed as part of a Twitter thread, and each original tweet is embedded below. The videos are best viewed on desktop.</p>
+<h4 id="august-15-2021--nbspnbsp-nashville-sc-2---1-dc-united">August 15, 2021   |  Nashville SC (2) - 1 D.C. United&nbsp;<a class="section-anchor" href="#august-15-2021--nbspnbsp-nashville-sc-2---1-dc-united"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Two weeks ago, <a href="https://twitter.com/hashtag/EveryoneN?src=hash&amp;ref_src=twsrc%5Etfw">#EveryoneN</a> scored a lovely team goal. All 10 field players contributed to a 15-pass sequence, putting Nashville up 2-1.<br><br>Thanks to <a href="https://twitter.com/MLS?ref_src=twsrc%5Etfw">@MLS</a> and <a href="https://twitter.com/SecondSpectrum?ref_src=twsrc%5Etfw">@SecondSpectrum</a>, we <a href="https://twitter.com/AnalysisEvolved?ref_src=twsrc%5Etfw">@AnalysisEvolved</a> get an aerial view of these special build-ups. They’re more common than you might think! <a href="https://t.co/gqEUDqrLt1">pic.twitter.com/gqEUDqrLt1</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430980050220994561?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="august-21-2021--nbspnbsp-columbus-crew-1---2-seattle-sounders-fc">August 21, 2021   |  Columbus Crew 1 - (2) Seattle Sounders FC&nbsp;<a class="section-anchor" href="#august-21-2021--nbspnbsp-columbus-crew-1---2-seattle-sounders-fc"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">More recently, a late-game winner from <a href="https://twitter.com/hashtag/Sounders?src=hash&amp;ref_src=twsrc%5Etfw">#Sounders</a> was the product of 19 consecutive passes, a forced turnover immediately after the <a href="https://twitter.com/hashtag/Crew96?src=hash&amp;ref_src=twsrc%5Etfw">#Crew96</a> restart, and an effective long ball from <a href="https://twitter.com/hashtag/MLSAllStar?src=hash&amp;ref_src=twsrc%5Etfw">#MLSAllStar</a> captain Cristian Roldan. <a href="https://t.co/muW7nIhU3x">pic.twitter.com/muW7nIhU3x</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430980520452710400?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="july-25-2021--nbspnbsp-inter-miami-cf-1---1-philadelphia-union">July 25, 2021   |  Inter Miami CF 1 - (1) Philadelphia Union&nbsp;<a class="section-anchor" href="#july-25-2021--nbspnbsp-inter-miami-cf-1---1-philadelphia-union"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This 27-pass sequence from <a href="https://twitter.com/hashtag/DOOP?src=hash&amp;ref_src=twsrc%5Etfw">#DOOP</a> had a few quick switches in the <a href="https://twitter.com/hashtag/InterMiamiCF?src=hash&amp;ref_src=twsrc%5Etfw">#InterMiamiCF</a> half and an impressive exchange between Sullivan and Gazdag at the top of the 18-yard box.<br><br>But it was a poor pressing attempt from Gonzalo Higuaín that allowed Philadelphia to strike quickly. <a href="https://t.co/e0POv6RV0S">pic.twitter.com/e0POv6RV0S</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430980932845154313?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="july-17-2021--nbspnbsp-toronto-fc-1---0-orlando-city-sc">July 17, 2021   |  Toronto FC (1) - 0 Orlando City SC&nbsp;<a class="section-anchor" href="#july-17-2021--nbspnbsp-toronto-fc-1---0-orlando-city-sc"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/TFCLive?src=hash&amp;ref_src=twsrc%5Etfw">#TFCLive</a> scored their opener in July’s game against <a href="https://twitter.com/hashtag/VamosOrlando?src=hash&amp;ref_src=twsrc%5Etfw">#VamosOrlando</a> after stringing together 19 consecutive passes in under 50 seconds.<br><br>Altidore’s link-up play also pulled Jansson well out of position and ultimately forced an aerial matchup against Moutinho. <a href="https://t.co/wsqKem6QeM">pic.twitter.com/wsqKem6QeM</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981203553886217?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="july-3-2021--nbspnbsp-cf-montréal-1---0-inter-miami-cf">July 3, 2021   |  CF Montréal (1) - 0 Inter Miami CF&nbsp;<a class="section-anchor" href="#july-3-2021--nbspnbsp-cf-montréal-1---0-inter-miami-cf"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Side-to-side movement from <a href="https://twitter.com/hashtag/CFMTL?src=hash&amp;ref_src=twsrc%5Etfw">#CFMTL</a> seemed to lull <a href="https://twitter.com/hashtag/InterMiamiCF?src=hash&amp;ref_src=twsrc%5Etfw">#InterMiamiCF</a> to sleep in this 22-pass sequence.<br><br>And Toye’s run at 40:29 enables Quioto, Mihailović, and Choinière to turn and run hard at what’s left of Miami’s defense. <a href="https://t.co/LQ5AcP1vOb">pic.twitter.com/LQ5AcP1vOb</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981269597343746?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="june-19-2021--nbspnbsp-fc-cincinnati-0---2-colorado-rapids">June 19, 2021   |  FC Cincinnati 0 - (2) Colorado Rapids&nbsp;<a class="section-anchor" href="#june-19-2021--nbspnbsp-fc-cincinnati-0---2-colorado-rapids"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/Rapids96?src=hash&amp;ref_src=twsrc%5Etfw">#Rapids96</a> scored their goal on the road against <a href="https://twitter.com/hashtag/FCCincy?src=hash&amp;ref_src=twsrc%5Etfw">#FCCincy</a> after 16 consecutive passes.<br><br>Cruz and Kubo simultaneously apply pressure to the ball, leaving Price with plenty of space to drive at the Cincinnati defense and play an incisive pass toward Lewis. <a href="https://t.co/MkFrhm5D9A">pic.twitter.com/MkFrhm5D9A</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981323443822601?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="may-2-2021--nbspnbsp-seattle-sounders-fc-2---0-la-galaxy">May 2, 2021   |  Seattle Sounders FC (2) - 0 LA Galaxy&nbsp;<a class="section-anchor" href="#may-2-2021--nbspnbsp-seattle-sounders-fc-2---0-la-galaxy"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">During week 3, <a href="https://twitter.com/hashtag/Sounders?src=hash&amp;ref_src=twsrc%5Etfw">#Sounders</a> strung together 27 consecutive passes en route to Brad Smith’s second goal in two games.<br><br>Seattle took advantage of the space out wide in their build-up, pulling the <a href="https://twitter.com/hashtag/LAGalaxy?src=hash&amp;ref_src=twsrc%5Etfw">#LAGalaxy</a> defense to one side while Smith floated in at the back post. <a href="https://t.co/yqX6mbXVTk">pic.twitter.com/yqX6mbXVTk</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981390254977024?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="november-22-2020--nbspnbsp-minnesota-united-fc-3---0-colorado-rapids">November 22, 2020   |  Minnesota United FC (3) - 0 Colorado Rapids&nbsp;<a class="section-anchor" href="#november-22-2020--nbspnbsp-minnesota-united-fc-3---0-colorado-rapids"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Leading up to their third goal in the opening round of last year’s playoffs, <a href="https://twitter.com/hashtag/MNUFC?src=hash&amp;ref_src=twsrc%5Etfw">#MNUFC</a> completed 24 consecutive passes.<br><br>A smart run from Molino ultimately draws out a <a href="https://twitter.com/hashtag/Rapids96?src=hash&amp;ref_src=twsrc%5Etfw">#Rapids96</a> center back, leaving Reynoso with plenty of space to drive forward as other Minnesota attackers join. <a href="https://t.co/Z4PJLJzN3B">pic.twitter.com/Z4PJLJzN3B</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981455371456518?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="november-1-2020--nbspnbsp-colorado-rapids-1---0-seattle-sounders-fc">November 1, 2020   |  Colorado Rapids (1) - 0 Seattle Sounders FC&nbsp;<a class="section-anchor" href="#november-1-2020--nbspnbsp-colorado-rapids-1---0-seattle-sounders-fc"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">This 17-pass sequence from <a href="https://twitter.com/hashtag/Rapids96?src=hash&amp;ref_src=twsrc%5Etfw">#Rapids96</a> against <a href="https://twitter.com/hashtag/Sounders?src=hash&amp;ref_src=twsrc%5Etfw">#Sounders</a> is a great illustration of absorbing the opponent’s press and striking quickly when space opens up.<br><br>Price is fortunate not to turn the ball over to Ruidíaz in a very dangerous area, but Colorado makes no mistake afterward. <a href="https://t.co/iU1mfssJ2e">pic.twitter.com/iU1mfssJ2e</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981533452615684?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="october-14-2020--nbspnbsp-vancouver-whitecaps-fc-1---0-los-angeles-fc">October 14, 2020   |  Vancouver Whitecaps FC (1) - 0 Los Angeles FC&nbsp;<a class="section-anchor" href="#october-14-2020--nbspnbsp-vancouver-whitecaps-fc-1---0-los-angeles-fc"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Another example comes courtesy of <a href="https://twitter.com/hashtag/VWFC?src=hash&amp;ref_src=twsrc%5Etfw">#VWFC</a> and their 19-pass sequence against <a href="https://twitter.com/hashtag/LAFC?src=hash&amp;ref_src=twsrc%5Etfw">#LAFC</a>.<br><br>With Vancouver inviting pressure from LAFC&#39;s forwards, Rossi and BWP commit, Bush breaks the first line with a pass to Bikel, Bikel finds Dájome with a long ball, and Vancouver is off to the races. <a href="https://t.co/GLlMagCIeo">pic.twitter.com/GLlMagCIeo</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981598380498956?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="september-23-2020--nbspnbsp-real-salt-lake-2---0-la-galaxy">September 23, 2020   |  Real Salt Lake (2) - 0 LA Galaxy&nbsp;<a class="section-anchor" href="#september-23-2020--nbspnbsp-real-salt-lake-2---0-la-galaxy"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Against <a href="https://twitter.com/hashtag/LAGalaxy?src=hash&amp;ref_src=twsrc%5Etfw">#LAGalaxy</a> last September, <a href="https://twitter.com/hashtag/RSL?src=hash&amp;ref_src=twsrc%5Etfw">#RSL</a> put 17 consecutive passes together before doubling their lead.<br><br>After a switch from Glad, smart running from Baird and Rusnák draws out LA’s right back — leaving Rusnák with ample space and time to find Kreilach alone at the penalty spot. <a href="https://t.co/yS35khkgCZ">pic.twitter.com/yS35khkgCZ</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981663123779589?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h4 id="august-26-2020--nbspnbsp-orlando-city-sc-1---1-nashville-sc">August 26, 2020   |  Orlando City SC (1) - 1 Nashville SC&nbsp;<a class="section-anchor" href="#august-26-2020--nbspnbsp-orlando-city-sc-1---1-nashville-sc"><i class="fas fa-link"></i></a> </h4>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">And here, effective counter-pressing from <a href="https://twitter.com/hashtag/VamosOrlando?src=hash&amp;ref_src=twsrc%5Etfw">#VamosOrlando</a> deep in the <a href="https://twitter.com/hashtag/EveryoneN?src=hash&amp;ref_src=twsrc%5Etfw">#EveryoneN</a> half yields 17 consecutive passes and an equalizer from Mueller.<br><br>Controlled passing in tight quarters — particularly from Méndez — and a killer first-time ball from Pereyra make the difference. <a href="https://t.co/CN1LqblkuY">pic.twitter.com/CN1LqblkuY</a></p>&mdash; Tyler Richardett (@TylerRichardett) <a href="https://twitter.com/TylerRichardett/status/1430981724054360066?ref_src=twsrc%5Etfw">August 26, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><em>Data: Second Spectrum</em></p>
+
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/soccer-analytics/">Soccer Analytics</a>
+  
+  <a class="badge badge-light" href="/tag/american-soccer-analysis/">American Soccer Analysis</a>
+  
+  <a class="badge badge-light" href="/tag/r/">R</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+  
+
+  
+
+  <p class="powered-by">
+    © 2022 Tyler Richardett &middot; 
+
+    <a href="https://github.com/tyler-richardett/tylerrichardett.io" target="_blank" rel="noopener"><i class="fas fa-code-branch"></i></a>  &middot;
+
+    Made with the <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i> </a><a href="https://github.com/rstudio/blogdown" target="_blank" rel="noopener">blogdown</a> package and the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+  </p>
+
+  
+  
+
+
+
+
+
+
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js" crossorigin="anonymous"></script>
+        
+      
+
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    <script src="/js/bootstrap.bundle.min.6aed84840afc03ab4d5750157f69c120.js"></script>
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.8859d3cf6e5d748215fea2814e2e9c7f.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

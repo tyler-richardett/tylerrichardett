@@ -24,7 +24,7 @@ superuser: true
 title: Tyler Richardett
 ---
 
-Tyler Richardett is a machine learning engineer at ComponentWise Solutions, where he oversees the development of deep learning- and computer vision-based solutions for clients at the Department of Homeland Security. On occasion, he contributes to [American Soccer Analysis](https://www.americansocceranalysis.com/). 
+Tyler Richardett is a data scientist at ComponentWise Solutions, where he oversees the development of deep learning- and computer vision-based solutions for clients at the Department of Homeland Security. On occasion, he contributes to [American Soccer Analysis](https://www.americansocceranalysis.com/). 
 
 He holds an M.S. in Data Analytics Engineering from George Mason University.
 

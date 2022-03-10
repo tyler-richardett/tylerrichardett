@@ -6,4 +6,7 @@
 main:
   - name: Blog
     url: 'blog'
+    weight: 10
+  - name: Resume
+    url: 'uploads/Resume_Tyler-Richardett_2022-03-03.pdf'
     weight: 20
